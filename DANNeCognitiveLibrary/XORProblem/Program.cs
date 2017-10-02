@@ -9,7 +9,7 @@ namespace XORProblem {
         static void Main(string[] args) {
             // XOR truth table Neural Network
             // by Daniel L. Astillero
-            // Using Accenture Cognitive Library
+            // Using DANNe Cognitive Library
 
             // Step 1. Create instances of the input neurons and set the input type
             // Normalize the values (or not--this is just the Truth Table XOR problem)
