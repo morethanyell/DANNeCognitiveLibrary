@@ -199,7 +199,7 @@ namespace DANNeCognitiveLibrary {
                             hn.Activate();
                         }
                     }
-
+                    
                     // Fire the output neuron(s) and print the prediction
                     foreach (OutputNeuron on in this.OutputNeurons) {
                         on.Inputs = new float[this.HiddenNeurons.Count];
@@ -207,7 +207,6 @@ namespace DANNeCognitiveLibrary {
                             on.Inputs[k] = this.HiddenNeurons[k].FofX;
                             on.Activate();
                         }
-
                         Console.WriteLine($"\t{i + 1},{row[0]},{row[1]},{expectedResult},{on.FofX},{on.Error}"); // CSV like output
                     }
 
@@ -215,7 +214,6 @@ namespace DANNeCognitiveLibrary {
                     foreach (OutputNeuron on in this.OutputNeurons) {
                         on.Error = SigmoidDerivative(on.FofX) * (expectedResult - on.FofX);
                         on.AdjustWeights(applyLearningRate, this.LearningRate);
-
                         // Calculate the error of the hidden neurons then adjust the weights
                         for (int l = 0; l < on.TotalSynapses; l++) {
                             this.HiddenNeurons[l].Error = SigmoidDerivative(this.HiddenNeurons[l].FofX) * on.Error * on.Weights[l];
