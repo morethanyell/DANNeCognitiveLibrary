@@ -73,9 +73,11 @@ namespace DANNeCognitiveLibrary {
         public float LearningRate { get; set; }
 
         /// <summary>
-        /// Sets the training data from a <see cref="DataTable"/>
+        /// Sets the training data from a <see cref="DataTable"/> assuming the last column
+        /// is the known answer
         /// </summary>
-        /// <param name="dt">A prepared <see cref="DataTable"/></param>
+        /// <param name="dt">A prepared DataTable containing the labeled dataset
+        /// and assuming that the last column is the known answer to train from<see cref="DataTable"/></param>
         public void SetTrainingData(DataTable dt) {
             this.TrainingDataTable = dt.Copy() as DataTable;
         }
