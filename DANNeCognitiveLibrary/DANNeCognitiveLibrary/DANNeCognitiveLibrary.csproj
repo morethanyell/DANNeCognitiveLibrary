@@ -10,4 +10,10 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="MathNet.Numerics.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
