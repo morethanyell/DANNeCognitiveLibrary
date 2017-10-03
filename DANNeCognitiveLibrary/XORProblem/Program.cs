@@ -7,6 +7,7 @@ using static DANNeCognitiveLibrary.Enumerations;
 namespace XORProblem {
     class Program {
         static void Main(string[] args) {
+
             // XOR truth table Neural Network
             // by Daniel L. Astillero
             // Using DANNe Cognitive Library
@@ -148,7 +149,7 @@ namespace XORProblem {
 
             Console.WriteLine("\nStep 8. Set the epoch and then start the training.");
 
-            ann.Epochs = 2000;
+            ann.Epochs = 1000000;
             ann.LearningRate = 0.95f;
             ann.StartTraining(applyLearningRate: true);
 

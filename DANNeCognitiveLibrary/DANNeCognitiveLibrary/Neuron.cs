@@ -140,13 +140,9 @@ namespace DANNeCognitiveLibrary {
         /// the <see cref="LearningRateAlpha"/> or not.</param>
         public void AdjustWeights(bool applyLearningRate = false, float learningRate = 1.0f) {
             if (applyLearningRate) {
-                for (int i = 0; i < this.Weights.Length; i++) {
-                    this.Weights[i] += this.Inputs[i] * (this.Error * learningRate);
-                }
+                for (int i = 0; i < this.Weights.Length; i++) this.Weights[i] += this.Inputs[i] * (this.Error * learningRate);
             } else {
-                for (int i = 0; i < this.Weights.Length; i++) {
-                    this.Weights[i] += this.Inputs[i] * this.Error;
-                }
+                for (int i = 0; i < this.Weights.Length; i++) this.Weights[i] += this.Inputs[i] * this.Error;
             }
         }
 
