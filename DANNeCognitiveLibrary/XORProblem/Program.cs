@@ -149,13 +149,14 @@ namespace XORProblem {
 
             Console.WriteLine("\nStep 8. Set the epoch and then start the training.");
 
-            ann.Epochs = 1000000;
-            ann.LearningRate = 0.95f;
+            ann.Epochs = 10000;
+            ann.LearningRate = 0.1f;
             ann.StartTraining(applyLearningRate: true);
 
             Console.WriteLine("\nStep 9. Done with training! Now we can test the model.");
 
             while (true) {
+
                 try {
                     Console.Write("\n\tEnter left number: ");
                     var left = float.Parse(Console.ReadLine());
