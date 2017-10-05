@@ -78,6 +78,7 @@ namespace DANNeCognitiveLibrary {
         /// Assigns random value to the weights.
         /// </summary>
         public void InitializeWeights() {
+
             switch (this.Randomizer) {
                 case Randomizers.Random: // Simple PRNG
                     for (int i = 0; i < this.Weights.Length; i++)
@@ -96,12 +97,17 @@ namespace DANNeCognitiveLibrary {
                     }
                     break;
                 case Randomizers.MersenneTwister: // MersenneTwister PRNG
-                    for (int i = 0; i < this.Weights.Length; i++)
+                    for (int i = 0; i < this.Weights.Length; i++) {
                         this.Weights[i] = (float)(MathNet.Numerics.Random.MersenneTwister.Default.NextDouble()); // call the next MersenneTwister double
+                        this.Weights[i] += MathNet.Numerics.Random.MersenneTwister.Default.Next(-1, 1);
+                    }
+
                     break;
                 default: // Favored MersenneTwister
-                    for (int i = 0; i < this.Weights.Length; i++)
+                    for (int i = 0; i < this.Weights.Length; i++) {
                         this.Weights[i] = (float)(MathNet.Numerics.Random.MersenneTwister.Default.NextDouble()); // call the next MersenneTwister double
+                        this.Weights[i] += MathNet.Numerics.Random.MersenneTwister.Default.Next(-1, 1);
+                    }
                     break;
             }
         }
@@ -110,6 +116,7 @@ namespace DANNeCognitiveLibrary {
         /// Assigns a random value to the bias.
         /// </summary>
         public void InitializeBias() {
+
             switch (this.Randomizer) {
                 case Randomizers.Random: // Simple PRNG
                     this.Bias = (float)(new Random(DateTime.Now.Millisecond).NextDouble()); // call the next double given the 
@@ -125,12 +132,19 @@ namespace DANNeCognitiveLibrary {
                     }
                     break;
                 case Randomizers.MersenneTwister: // MersenneTwister PRNG
-                    this.Bias = (float)(MathNet.Numerics.Random.MersenneTwister.Default.NextDouble()); // call the next MersenneTwister double
+
+                    for (int i = 0; i < this.Weights.Length; i++) {
+                        this.Bias = (float)(MathNet.Numerics.Random.MersenneTwister.Default.NextDouble()); // call the next MersenneTwister double
+                        this.Bias += MathNet.Numerics.Random.MersenneTwister.Default.Next(-1, 1);
+                    }
+
                     break;
                 default: // Favored MersenneTwister
                     this.Bias = (float)(MathNet.Numerics.Random.MersenneTwister.Default.NextDouble()); // call the next MersenneTwister double
+                    this.Bias += MathNet.Numerics.Random.MersenneTwister.Default.Next(-1, 1);
                     break;
             }
+
         }
 
         /// <summary>
@@ -139,11 +153,10 @@ namespace DANNeCognitiveLibrary {
         /// <param name="applyLearningRate">Optional parameter that will either apply
         /// the <see cref="LearningRateAlpha"/> or not.</param>
         public void AdjustWeights(bool applyLearningRate = false, float learningRate = 1.0f) {
-            if (applyLearningRate) {
+            if (applyLearningRate)
                 for (int i = 0; i < this.Weights.Length; i++) this.Weights[i] += this.Inputs[i] * (this.Error * learningRate);
-            } else {
+            else
                 for (int i = 0; i < this.Weights.Length; i++) this.Weights[i] += this.Inputs[i] * this.Error;
-            }
         }
 
         /// <summary>
@@ -166,5 +179,12 @@ namespace DANNeCognitiveLibrary {
             }
         }
 
+        /// <summary>
+        /// Translates this object into a string that follows the format: Name (Total Weights: x)
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString() {
+            return $"{this.Name} (Total Weights: {this.Weights.Length})";
+        }
     }
 }

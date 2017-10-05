@@ -130,7 +130,10 @@ namespace XORProblem {
             // Set training data
             ann.SetTrainingData(inputTable);
 
-            // Set hidden neurons
+            // Set number of desired hidden layers
+            ann.TotalHiddenLayers = 1;
+
+            // Set or add the hidden neurons
             ann.HiddenNeurons = new List<HiddenNeuron> {
                 hidN1L2,
                 hidN2L2,
@@ -138,24 +141,27 @@ namespace XORProblem {
                 hidN4L2
             };
 
-            // Set output neurons
+            // Set add the output neuron(s)
             ann.OutputNeurons = new List<OutputNeuron> {
                 outN1
             };
 
+            // Set the weights matrices
+            ann.SetWeightsMatrices();
+
             // Step 7. Make a feed forward just to check everything's working
             Console.WriteLine("\nStep 7. Run a feed forward just to check everything's working");
-            ann.SingleInstanceFeedForward();
 
             Console.WriteLine("\nStep 8. Set the epoch and then start the training.");
 
-            ann.Epochs = 1000000;
-            ann.LearningRate = 0.95f;
+            ann.Epochs = 10000;
+            ann.LearningRate = 0.1f;
             ann.StartTraining(applyLearningRate: true);
 
             Console.WriteLine("\nStep 9. Done with training! Now we can test the model.");
 
             while (true) {
+
                 try {
                     Console.Write("\n\tEnter left number: ");
                     var left = float.Parse(Console.ReadLine());
