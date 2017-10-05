@@ -101,7 +101,7 @@ namespace DANNeCognitiveLibrary {
                         this.Weights[i] = (float)(MathNet.Numerics.Random.MersenneTwister.Default.NextDouble()); // call the next MersenneTwister double
                         this.Weights[i] += MathNet.Numerics.Random.MersenneTwister.Default.Next(-1, 1);
                     }
-                        
+
                     break;
                 default: // Favored MersenneTwister
                     for (int i = 0; i < this.Weights.Length; i++) {
@@ -157,7 +157,6 @@ namespace DANNeCognitiveLibrary {
                 for (int i = 0; i < this.Weights.Length; i++) this.Weights[i] += this.Inputs[i] * (this.Error * learningRate);
             else
                 for (int i = 0; i < this.Weights.Length; i++) this.Weights[i] += this.Inputs[i] * this.Error;
-
         }
 
         /// <summary>
@@ -180,5 +179,12 @@ namespace DANNeCognitiveLibrary {
             }
         }
 
+        /// <summary>
+        /// Translates this object into a string that follows the format: Name (Total Weights: x)
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString() {
+            return $"{this.Name} (Total Weights: {this.Weights.Length})";
+        }
     }
 }

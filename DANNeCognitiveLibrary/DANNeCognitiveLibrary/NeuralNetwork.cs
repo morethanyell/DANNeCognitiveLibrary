@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using static DANNeCognitiveLibrary.ActivationFunctionUtilities;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace DANNeCognitiveLibrary {
 
@@ -36,11 +37,6 @@ namespace DANNeCognitiveLibrary {
         public List<Neuron> Inputs { get; set; }
 
         /// <summary>
-        /// Gets the number of hidden neurons in this Neural Network
-        /// </summary>
-        public int TotalHiddenNeurons { get; internal set; }
-
-        /// <summary>
         /// Gets or sets the List of hidden neurons in this Neural Network
         /// </summary>
         public List<HiddenNeuron> HiddenNeurons { get; set; }
@@ -51,14 +47,24 @@ namespace DANNeCognitiveLibrary {
         public List<OutputNeuron> OutputNeurons { get; set; }
 
         /// <summary>
+        /// Gets the number of hidden neurons in this Neural Network
+        /// </summary>
+        public int TotalHiddenNeurons { get; internal set; }
+
+        /// <summary>
         /// Gets the number of hidden layers in this Neural Network
         /// </summary>
-        public int TotalHiddenLayers { get; internal set; }
+        public int TotalHiddenLayers { get; set; }
 
         /// <summary>
         /// Gets the number of output neurons in this Neural Network
         /// </summary>
         public int TotalOutputs { get; internal set; }
+
+        /// <summary>
+        /// Gets the list of weights matrices corresponding to the weights
+        /// </summary>
+        public List<Matrix<float>> WeightsMatrices { get; internal set; }
 
         /// <summary>
         /// Gets or sets the number epochs to be used in training this Neural Network
@@ -96,6 +102,28 @@ namespace DANNeCognitiveLibrary {
         /// <param name="msExcelFilePath">The exact location of the CSV file</param>
         public void SetTrainingData(string msExcelFilePath, int worksheetIndex = 0) {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Sets internally the property <see cref="WeightsMatrices"/>
+        /// </summary>
+        public void SetWeightsMatrices() {
+
+            this.WeightsMatrices = new List<Matrix<float>>();
+
+            for (int layers = 0; layers < this.TotalHiddenLayers; layers++) {
+
+                Matrix<float> m = Matrix<float>.Build.Dense(this.HiddenNeurons.Count, this.TrainingDataTable.Columns.Count - 1);
+
+                for (int r = 0; r < this.HiddenNeurons.Count; r++) {
+                    for (int c = 0; c < this.HiddenNeurons[r].Weights.Length; c++) {
+                        m[r, c] = this.HiddenNeurons[r].Weights[c];
+                    }
+                }
+
+                this.WeightsMatrices.Add(m);
+            }
+
         }
 
         /// <summary>
@@ -199,7 +227,7 @@ namespace DANNeCognitiveLibrary {
                             hn.Activate();
                         }
                     }
-                    
+
                     // Fire the output neuron(s) and print the prediction
                     foreach (OutputNeuron on in this.OutputNeurons) {
                         on.Inputs = new float[this.HiddenNeurons.Count];
@@ -237,6 +265,8 @@ namespace DANNeCognitiveLibrary {
             }
 
         }
+
+
 
     }
 }
