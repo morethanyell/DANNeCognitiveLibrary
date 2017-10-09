@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DANNeCognitiveLibrary {
+namespace NeuralNetworkLibrary {
 
     /// <summary>
     /// A collection of Enumerative values used as tools in this library.
@@ -59,7 +59,11 @@ namespace DANNeCognitiveLibrary {
             /// <summary>
             /// See <see cref="Math.Tanh(double)"/>
             /// </summary>
-            HyperbolicTangent = 2
+            HyperbolicTangent = 2,
+            /// <summary>
+            /// Activation function that returns the same number if it's more than 0, otherwise 0
+            /// </summary>
+            ReLU = 3
         }
 
     }
