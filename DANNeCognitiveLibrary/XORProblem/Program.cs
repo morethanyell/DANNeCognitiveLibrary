@@ -10,8 +10,8 @@ namespace XORProblem {
 
             // Store the training data into a datatable
 
-            var inpgetter = GetCSV(@"C:\Users\daniel.l.astillero\Documents\Visual Studio 2017\Projects\AccentureCognitiveLibrary\DATASETS\Pandora Dataset - Input Normalized.csv");
-            var outgetter = GetCSV(@"C:\Users\daniel.l.astillero\Documents\Visual Studio 2017\Projects\AccentureCognitiveLibrary\DATASETS\Pandora Dataset - Output Normalized.csv");
+            var inpgetter = GetCSV(@"C:\Users\daniel.l.astillero\Documents\Visual Studio 2017\Projects\AccentureCognitiveLibrary\DATASETS\inpnormal.csv");
+            var outgetter = GetCSV(@"C:\Users\daniel.l.astillero\Documents\Visual Studio 2017\Projects\AccentureCognitiveLibrary\DATASETS\outnormalOtOnly.csv");
 
             Task.WaitAll(inpgetter, outgetter);
 
@@ -23,13 +23,13 @@ namespace XORProblem {
 
             ffnn.SetTrainingInputData(dtInput);
 
-            ffnn.AddHiddenLayer(numOfHiddenNeurons: 22, activationFunction: Sigmoid);
+            ffnn.AddHiddenLayer(numOfHiddenNeurons: 6, activationFunction: ReLU);
 
-            ffnn.AddHiddenLayer(numOfHiddenNeurons: 22, activationFunction: Sigmoid);
+           // ffnn.AddHiddenLayer(numOfHiddenNeurons: 9, activationFunction: Sigmoid);
 
             ffnn.SetTrainingOutputData(dtOutput);
 
-            ffnn.LearningRate = 0.2f;
+            ffnn.LearningRate = 0.65f;
 
             ffnn.Epoch = 100000;
 
@@ -45,8 +45,9 @@ namespace XORProblem {
 
         private static async Task<DataTable> GetCSV(string filepath) {
             DataTable retval = await Task.Run(() => {
-                var adapter = new GenericParserAdapter(filepath);
-                adapter.FirstRowHasHeader = true;
+                var adapter = new GenericParserAdapter(filepath) {
+                    FirstRowHasHeader = true
+                };
                 DataTable dt = adapter.GetDataTable();
                 return dt;
             });

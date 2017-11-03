@@ -109,9 +109,11 @@ namespace NeuralNetworkLibrary {
             var onSynapse = this.HiddenLayers[this.HiddenLayers.Count - 1].Count;
             this.OutputNeurons = new List<OutputNeuron>();
             foreach (DataColumn col in dtOutput.Columns) {
-                this.OutputNeurons.Add(new OutputNeuron(onSynapse) {
+                var n = new OutputNeuron(onSynapse) {
                     ActivationFunction = ActivationFunctions.Sigmoid
-                });
+                };
+                n.InitializeWeights(); n.InitializeBias();
+                this.OutputNeurons.Add(n);
             }
         }
 
@@ -131,9 +133,11 @@ namespace NeuralNetworkLibrary {
             else hnSynapse = this.HiddenLayers[this.HiddenLayers.Count - 1].Count;
             List<HiddenNeuron> hn = new List<HiddenNeuron>();
             for (int i = 0; i < numOfHiddenNeurons; i++) {
-                hn.Add(new HiddenNeuron(hnSynapse) {
+                var n = new HiddenNeuron(hnSynapse) {
                     ActivationFunction = activationFunction
-                });
+                };
+                n.InitializeWeights(); n.InitializeBias();
+                hn.Add(n);
             }
             this.HiddenLayers.Add(hn);
             this.HiddenLayersCount++;
@@ -171,7 +175,7 @@ namespace NeuralNetworkLibrary {
             }
 
             Console.Write("\nGuess: ");
-            for (int i = 0; i < this.OutputNeurons.Count; i++) Console.Write($"{this.OutputNeurons[i].Activation:0.0000}\t");
+            for (int i = 0; i < this.OutputNeurons.Count; i++) Console.Write($"{this.OutputNeurons[i].Activation:0.000}\t");
         }
 
         /// <summary>
@@ -180,7 +184,8 @@ namespace NeuralNetworkLibrary {
         public void BackPropagation(float[] outputs) {
 
             Console.Write("\nAnswer: ");
-            for (int i = 0; i < outputs.Length; i++) Console.Write($"{outputs[i]:0.0000}\t");
+            for (int i = 0; i < outputs.Length; i++) Console.Write($"{outputs[i]:0.000}\t");
+
 
             for (int i = 0; i < this.OutputNeurons.Count; i++) {
                 this.OutputNeurons[i].Error = SigmoidDerivative(this.OutputNeurons[i].Activation) * (outputs[i] - this.OutputNeurons[i].Activation);
@@ -234,7 +239,7 @@ namespace NeuralNetworkLibrary {
                     }
                     for (int j = 0; j < this.OutputCount; j++) {
                         if (float.TryParse(this.TrainingOutputData.Rows[r][j].ToString(), out float parser)) {
-                            oup[j] = SigmoidActivation(parser);
+                            oup[j] = parser;
                         } else {
                             throw new InvalidCastException("Cannot parse the data from training data table into float");
                         }
