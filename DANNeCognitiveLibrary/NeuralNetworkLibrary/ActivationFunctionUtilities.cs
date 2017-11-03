@@ -74,6 +74,13 @@ namespace NeuralNetworkLibrary {
             return Math.Max(0, x);
         }
 
+        /// <summary>
+        /// Maps value with known range to another range
+        /// </summary>
+        /// <returns></returns>
+        public static float Map(double value, double fromSource, double toSource, double fromTarget, double toTarget) {
+            return (float)((value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget);
+        }
     }
 
 

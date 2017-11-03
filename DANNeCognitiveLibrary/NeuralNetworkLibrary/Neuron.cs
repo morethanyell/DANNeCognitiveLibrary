@@ -69,6 +69,7 @@ namespace NeuralNetworkLibrary {
             for (int i = 0; i < this.Weights.Length; i++) {
                 this.Weights[i] = (float)(MathNet.Numerics.Random.MersenneTwister.Default.NextDouble()); // call the next MersenneTwister double
                 this.Weights[i] += MathNet.Numerics.Random.MersenneTwister.Default.Next(MIN_WEIGHT_RANGE, MAX_WEIGHT_RANGE);
+                Console.WriteLine(this.Id + "| weight: " + this.Weights[i]);
             }
         }
 
