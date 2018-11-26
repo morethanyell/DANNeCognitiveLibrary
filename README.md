@@ -3,6 +3,4 @@ My journey to building a C# library for artificial neural network. I am inspired
 
 This repo has two C# projects. The first one contains the library and the other one (XORProblem) is a simple console application that learns the pattern of XOR truth table. It's basically the hello world of the NN.
 
-Thank you for your time dropping by.
-
-Feel free to fork. :)
+11/26/2018... damn son. time flies
